@@ -26,6 +26,12 @@ public class WeatherAnalysis {
 }
 
 class TemperatureAnalysis implements Runnable {
+    private List<DataEntry> temperatureDataList;
+
+    public List<DataEntry> getTemperatureDataList() {
+        return temperatureDataList;
+    }
+
     @Override
     public void run() {
         try {
@@ -48,7 +54,7 @@ class TemperatureAnalysis implements Runnable {
                 JSONArray timeArray = dailyData.getJSONArray("time");
                 JSONArray temperatureArray = dailyData.getJSONArray("temperature_2m_max");
 
-                List<DataEntry> temperatureDataList = new ArrayList<>();
+                temperatureDataList = new ArrayList<>();
                 for (int i = 0; i < timeArray.length(); i++) {
                     String time = timeArray.getString(i);
                     double temperature = temperatureArray.getDouble(i);
@@ -79,6 +85,12 @@ class TemperatureAnalysis implements Runnable {
 }
 
 class PrecipitationAnalysis implements Runnable {
+    private List<DataEntry> precipitationDataList;
+
+    public List<DataEntry> getPrecipitationDataList() {
+        return precipitationDataList;
+    }
+
     @Override
     public void run() {
         try {
@@ -101,7 +113,7 @@ class PrecipitationAnalysis implements Runnable {
                 JSONArray timeArray = dailyData.getJSONArray("time");
                 JSONArray precipitationArray = dailyData.getJSONArray("precipitation_sum");
 
-                List<DataEntry> precipitationDataList = new ArrayList<>();
+                precipitationDataList = new ArrayList<>();
                 int consecutiveRainyDays = 0;
 
                 for (int i = 0; i < timeArray.length(); i++) {
@@ -145,6 +157,10 @@ class DataEntry implements Comparable<DataEntry> {
     public DataEntry(String time, double value) {
         this.time = time;
         this.value = value;
+    }
+
+    public double getValue() {
+        return value;
     }
 
     @Override
